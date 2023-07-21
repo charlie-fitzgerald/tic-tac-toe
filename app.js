@@ -1,9 +1,21 @@
 const Gameboard = (() => {
-    let gameboard = ['','','','','','','','','']
+    const gameboard = ['X','O','O','O','O','X','X','X','X']
     
-    let render = () => {
-        
+    const render = () => {
+        const boardDisplay = document.querySelector("#gameboard");
+
+        gameboard.forEach((el, index) => {
+            const square = document.createElement("div");
+            square.classList.add("square");
+            square.setAttribute("id", `${index}`);
+            square.innerHTML = `<h1>${el}`;
+            boardDisplay.appendChild(square);
+            
+        })        
     }
+
+    const startButton = document.querySelector("#start-game");
+    startButton.addEventListener("click", render);
 })();
 
 const PlayerFactory = (playerName, marker) => {
@@ -11,3 +23,4 @@ const PlayerFactory = (playerName, marker) => {
 
     return { playerName, marker, sayName };
 }
+

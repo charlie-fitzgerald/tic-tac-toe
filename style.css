@@ -13,8 +13,12 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    /* border-top: 1px solid black;
+    border-bottom: 1px solid black; */
     height: 300px;
     width: 300px;
+    background-color: black;
+    gap: 1px;
 }
 
 .square {
@@ -22,9 +26,8 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
     width: 32.5%;
     height: 33%;
-    background-color: blue;
+    background-color: white;
     float: left;
 }
