@@ -3,12 +3,13 @@ const Gameboard = (() => {
     
     const render = () => {
         const boardDisplay = document.querySelector("#gameboard");
+        boardDisplay.innerHTML = '';
 
         gameboard.forEach((el, index) => {
             const square = document.createElement("div");
             square.classList.add("square");
             square.setAttribute("id", `${index}`);
-            square.innerHTML = `<h1>${el}`;
+            square.innerHTML = `<h1>${el}</h1>`;
             boardDisplay.appendChild(square);
             
         })        
