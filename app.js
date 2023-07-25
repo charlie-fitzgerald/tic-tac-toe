@@ -30,7 +30,7 @@ const gameBoardModule = (() => {
 
 //setting up displaycontroller module
 const displayControllerModule = (() => {
-        
+        console.log(gameBoardModule.getBoard())
 })();
 
 //setting up player factory function
