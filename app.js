@@ -15,33 +15,64 @@ const gameBoardModule = (() => {
             square.classList.add("square");
             square.setAttribute("id", `${index}`);
             square.innerHTML = `<h1>${el}</h1>`;
-            boardDisplay.appendChild(square);
+            boardDisplay.appendChild(square);   
             
-        })        
+        })
+        
+        const squares = document.querySelectorAll(".square");
+        squares.forEach(square => {
+            square.addEventListener("click", displayControllerModule.handleClick )
+        } )
     }
 
     const getBoard = () => gameboard;
 
-    const startButton = document.querySelector("#start-game");
-    startButton.addEventListener("click", render);
-
-    return { getBoard };
-})();
-
-//setting up displaycontroller module
-const displayControllerModule = (() => {
-        console.log(gameBoardModule.getBoard())
+    return { getBoard, render };
 })();
 
 //setting up player factory function
-const PlayerFactory = (playerName, playerId, marker) => {
+const playerFactory = (playerName, playerId, marker) => {
     const sayName = () => console.log(`My name is ${playerName}`);
 
     return { playerName, playerId, marker, sayName };
-}
+};
 
-let terry = PlayerFactory("Terry", 1, "X");
-let larry = PlayerFactory("Larry", 2, "O");
+
+//setting up displaycontroller module
+const displayControllerModule = (() => {    
+
+    let players = [];
+    let currentPlayerIndex;
+    let gameOver;
+
+    const start = () => {
+        players = [
+            playerFactory(document.querySelector("#player1").value, "X"),
+            playerFactory(document.querySelector("#player2").value, "O")
+        ]
+
+        currentPlayerIndex = 0;
+        gameOver = false;
+        console.log(players);
+        gameBoardModule.render();
+    }
+
+    const handleClick = e => {
+        console.log(e.target.id);
+    }
+
+    const startButton = document.querySelector("#start-game");
+    startButton.addEventListener("click", start );
+
+    return {
+        start,
+        handleClick
+    }
+
+})();
+
+
+
 
 
 
