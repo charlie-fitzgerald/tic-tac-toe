@@ -18,32 +18,40 @@ const gameBoardModule = (() => {
             boardDisplay.appendChild(square);   
             
         })
-        
+
         const squares = document.querySelectorAll(".square");
         squares.forEach(square => {
-            square.addEventListener("click", displayControllerModule.handleClick )
-        } )
+            square.addEventListener("click", Game.handleClick )
+        });
+        
+        
     }
 
     const getBoard = () => gameboard;
 
-    return { getBoard, render };
+    const update = (index, value) => {
+        gameboard[index] = value;
+        render();
+    }
+
+    return { getBoard, render, update };
 })();
 
 //setting up player factory function
-const playerFactory = (playerName, playerId, marker) => {
+const playerFactory = (playerName, marker) => {
     const sayName = () => console.log(`My name is ${playerName}`);
 
-    return { playerName, playerId, marker, sayName };
+    return { playerName, marker, sayName };
 };
 
 
-//setting up displaycontroller module
-const displayControllerModule = (() => {    
+//setting up Game display module
+const Game = (() => {    
 
     let players = [];
     let currentPlayerIndex;
     let gameOver;
+    let gameBoardBackground = document.querySelector("#gameboard");
 
     const start = () => {
         players = [
@@ -51,18 +59,46 @@ const displayControllerModule = (() => {
             playerFactory(document.querySelector("#player2").value, "O")
         ]
 
+        gameBoardBackground.setAttribute("background-color", "black")
+        // gameBoardBackground.setAttribute("border", "1px solid black")
         currentPlayerIndex = 0;
         gameOver = false;
-        console.log(players);
         gameBoardModule.render();
+        
+    }
+
+    const restart = () => {
+        for (let i = 0; i < 9; i++) {
+            gameBoardModule.update(i, '');
+            gameBoardModule.render();
+            // gameBoardBackground.setAttribute("background-color", "white")
+            // gameBoardBackground.setAttribute("border", "none");
+        }
+
+        document.querySelector("#player1").value = '';
+        document.querySelector("#player2").value = '';
     }
 
     const handleClick = e => {
-        console.log(e.target.id);
+        let index = parseInt(e.target.id);
+
+        if (gameBoardModule.getBoard()[index] !== '') {
+            return;
+        }
+        
+
+        gameBoardModule.update(index, players[currentPlayerIndex].marker)
+
+        currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+
+        
     }
 
     const startButton = document.querySelector("#start-game");
     startButton.addEventListener("click", start );
+
+    const restartButton = document.querySelector("#restart-game");
+    restartButton.addEventListener("click", restart );
 
     return {
         start,
