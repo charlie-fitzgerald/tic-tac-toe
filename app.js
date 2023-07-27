@@ -2,13 +2,10 @@
 const gameBoardModule = (() => {
     const gameboard = ['','','','','','','','','',]
 
-    //clicking start game button renders the board on screen
-    //will also be used to refresh the game board with the 
-    //latest game state after a player makes a move
-
     const render = () => {
         const boardDisplay = document.querySelector("#gameboard");
         boardDisplay.innerHTML = '';
+        boardDisplay.style.visibility = 'visible';
 
         gameboard.forEach((el, index) => {
             const square = document.createElement("div");
@@ -51,7 +48,6 @@ const Game = (() => {
     let players = [];
     let currentPlayerIndex;
     let gameOver;
-    let gameBoardBackground = document.querySelector("#gameboard");
 
     const start = () => {
         players = [
@@ -59,8 +55,6 @@ const Game = (() => {
             playerFactory(document.querySelector("#player2").value, "O")
         ]
 
-        gameBoardBackground.setAttribute("background-color", "black")
-        // gameBoardBackground.setAttribute("border", "1px solid black")
         currentPlayerIndex = 0;
         gameOver = false;
         gameBoardModule.render();
@@ -71,8 +65,6 @@ const Game = (() => {
         for (let i = 0; i < 9; i++) {
             gameBoardModule.update(i, '');
             gameBoardModule.render();
-            // gameBoardBackground.setAttribute("background-color", "white")
-            // gameBoardBackground.setAttribute("border", "none");
         }
 
         document.querySelector("#player1").value = '';
@@ -100,18 +92,7 @@ const Game = (() => {
     const restartButton = document.querySelector("#restart-game");
     restartButton.addEventListener("click", restart );
 
-    return {
-        start,
-        handleClick
-    }
+    return { start, handleClick }
 
 })();
-
-
-
-
-
-
-
-
 
