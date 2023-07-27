@@ -20,8 +20,6 @@ const gameBoardModule = (() => {
         squares.forEach(square => {
             square.addEventListener("click", Game.handleClick )
         });
-        
-        
     }
 
     const getBoard = () => gameboard;
@@ -57,8 +55,17 @@ const Game = (() => {
 
         currentPlayerIndex = 0;
         gameOver = false;
+        message(players);
         gameBoardModule.render();
         
+    }
+
+    const message = players => {
+
+        const playerMessage = document.querySelector("#message");
+
+        playerMessage.innerHTML = `<p>It is ${players[currentPlayerIndex].playerName}'s turn</p>`
+        console.log(players[currentPlayerIndex].playerName);
     }
 
     const restart = () => {
@@ -69,7 +76,10 @@ const Game = (() => {
 
         document.querySelector("#player1").value = '';
         document.querySelector("#player2").value = '';
+        document.querySelector("#message").innerHTML = '';
     }
+
+    
 
     const handleClick = e => {
         let index = parseInt(e.target.id);
@@ -78,6 +88,7 @@ const Game = (() => {
             return;
         }
         
+        message(players);
 
         gameBoardModule.update(index, players[currentPlayerIndex].marker)
 
